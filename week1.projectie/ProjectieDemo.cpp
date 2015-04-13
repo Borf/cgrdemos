@@ -4,6 +4,7 @@
 #include <blib/Shader.h>
 #include <blib/ResourceManager.h>
 #include <blib/gl/Vertex.h>
+#include <blib/Window.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -26,7 +27,7 @@ ProjectieDemo::ProjectieDemo() :
 
 {
 	appSetup.renderer = blib::AppSetup::GlRenderer;
-	appSetup.border = false;
+	appSetup.border = true;
 	appSetup.title = "Projectie Demo";
 	appSetup.vsync = true;
 	appSetup.window.setWidth(1280);
@@ -82,12 +83,12 @@ void ProjectieDemo::update(double elapsedTime)
 		proj = glm::perspective(fov, 640 / 720.0f, 0.1f, 100.0f);
 
 
-	renderer->setViewPort(0, 0, 1280, 720);
+	renderer->setViewPort(0, 0, window->getWidth()/2, window->getHeight());
 	renderer->unproject(glm::vec2(0, 0), NULL, &topleft, cam, proj);
-	renderer->unproject(glm::vec2(1280, 0), NULL, &topright, cam, proj);
-	renderer->unproject(glm::vec2(0, 720), NULL, &bottomleft, cam, proj);
-	renderer->unproject(glm::vec2(1280, 720), NULL, &bottomright, cam, proj);
-	renderer->unproject(glm::vec2(1280/2, 720/2), NULL, &center, cam, proj);
+	renderer->unproject(glm::vec2(window->getWidth() / 2, 0), NULL, &topright, cam, proj);
+	renderer->unproject(glm::vec2(0, window->getHeight()), NULL, &bottomleft, cam, proj);
+	renderer->unproject(glm::vec2(window->getWidth() / 2, window->getHeight()), NULL, &bottomright, cam, proj);
+	renderer->unproject(glm::vec2(window->getWidth() / 2 / 2, window->getHeight() / 2), NULL, &center, cam, proj);
 	prevKeyState = keyState;
 }
 
@@ -136,7 +137,7 @@ void ProjectieDemo::draw()
 
 	renderer->clear(glm::vec4(1, 1, 1, 1), blib::Renderer::Color | blib::Renderer::Depth);
 
-	renderer->setViewPort(0, 0, 640, 720);
+	renderer->setViewPort(0, 0, window->getWidth() / 2, window->getHeight());
 	if (ortho)
 		shader->setUniform(Uniforms::projectionMatrix, glm::ortho(-5.0f, 5.0f, -5.0f, 5.0f, -50.0f, 50.0f));
 	else
@@ -149,7 +150,7 @@ void ProjectieDemo::draw()
 
 
 
-	renderer->setViewPort(640, 0, 640, 720);
+	renderer->setViewPort(window->getWidth()/2, 0, window->getWidth() / 2, window->getHeight());
 	shader->setUniform(Uniforms::projectionMatrix, glm::perspective(70.0f, 640 / 720.0f, 0.1f, 100.0f));
 	shader->setUniform(Uniforms::cameraMatrix, glm::lookAt(glm::vec3(3.75f, 4.25f, 4), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)) * glm::rotate(glm::mat4(), rot*0.1f, glm::vec3(0, 1, 0)));
 	shader->setUniform(Uniforms::modelMatrix, glm::rotate(glm::mat4(), rot, glm::vec3(0, 1, 0)));
@@ -204,6 +205,6 @@ void ProjectieDemo::draw()
 
 
 
-	renderer->setViewPort(0, 0, 1280, 720);
+	renderer->setViewPort(0, 0, window->getWidth(), window->getHeight());
 
 }
