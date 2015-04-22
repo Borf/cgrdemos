@@ -53,7 +53,7 @@ void ProjectieDemo::init()
 
 	rot = 0;
 	ortho = false;
-	fov = 90.0f;
+	fov = 60.0f;
 	nearPlane = 0.1f;
 	farPlane = 7.5f;
 }
@@ -67,9 +67,9 @@ void ProjectieDemo::update(double elapsedTime)
 	if (keyState.isPressed(blib::Key::O) && !prevKeyState.isPressed(blib::Key::O))
 		ortho = !ortho;
 	if (keyState.isPressed(blib::Key::MINUS))
-		fov -= elapsedTime * 45;
+		fov -= (float)elapsedTime * 45;
 	if (keyState.isPressed(blib::Key::PLUS))
-		fov += elapsedTime * 45;
+		fov += (float)elapsedTime * 45;
 
 
 	rot += 90 * (float)elapsedTime;

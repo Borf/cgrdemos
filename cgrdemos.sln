@@ -11,6 +11,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "blib", "blib\blib.vcxproj", "{22D5CA69-1AFF-4025-AC86-A4F056D79B53}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "week1.transformorder", "week1.transformorder\week1.transformorder.vcxproj", "{95B538FF-5FB4-44EF-BFF1-0598F2C74F58}"
+	ProjectSection(ProjectDependencies) = postProject
+		{22D5CA69-1AFF-4025-AC86-A4F056D79B53} = {22D5CA69-1AFF-4025-AC86-A4F056D79B53}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
